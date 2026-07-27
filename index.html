@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ukubona LLC — Roundtable Ledger · Nietzsche's USRPO Pentad</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%2314111c'/%3E%3Cpolygon points='50,8 88,76 12,76' fill='none'/%3E%3Cpath d='M50 10 L67 68 L15 32 L85 32 L33 68 Z' fill='none' stroke='%23e0a334' stroke-width='4' stroke-linejoin='round'/%3E%3Ccircle cx='50' cy='50' r='44' fill='none' stroke='%23e0a334' stroke-width='4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f1e8;
+    --surface:#ffffff;
+    --surface-2:#efe9db;
+    --ink:#201a2e;
+    --muted:#6b6478;
+    --line:#ddd4c2;
+    --amber:#a8670a;
+    --violet:#6d3fc0;
+    --teal:#0e756f;
+    --rose:#a83457;
+    --shadow: 0 1px 2px rgba(32,26,46,.06), 0 8px 24px rgba(32,26,46,.06);
+  }
+  html.dark{
+    --bg:#14111c;
+    --surface:#1c1828;
+    --surface-2:#242032;
+    --ink:#ede8f5;
+    --muted:#9b93ac;
+    --line:#332d47;
+    --amber:#e0a334;
+    --violet:#a683e8;
+    --teal:#4fd1c7;
+    --rose:#ef6c96;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 30px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'DM Sans', sans-serif;
+    transition:background .35s ease, color .35s ease;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--amber); color:#fff; }
+
+  a{ color:var(--violet); }
+
+  .wrap{ max-width:960px; margin:0 auto; padding:0 24px 120px; }
+
+  /* ---------- Header ---------- */
+  header{
+    padding:56px 24px 28px;
+    display:flex; align-items:flex-start; gap:22px;
+    max-width:960px; margin:0 auto;
+  }
+  .logo-spin{ flex:none; width:64px; height:64px; }
+  .logo-spin svg{ width:100%; height:100%; animation: spin 34s linear infinite; }
+  @media (prefers-reduced-motion: reduce){ .logo-spin svg{ animation:none; } }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  .h-text{ flex:1; min-width:0; }
+  .eyebrow{
+    font-family:'DM Mono', monospace; font-size:12px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--muted); margin:0 0 6px;
+  }
+  h1{
+    font-family:'DM Serif Display', serif; font-weight:400; font-style:italic;
+    font-size:clamp(28px,4.4vw,42px); line-height:1.08; margin:0 0 10px;
+    letter-spacing:-.01em;
+  }
+  .dek{ margin:0; color:var(--muted); font-size:15px; max-width:56ch; line-height:1.55; }
+
+  .toggle-btn{
+    flex:none; border:1px solid var(--line); background:var(--surface);
+    color:var(--ink); border-radius:999px; padding:8px 16px;
+    font-family:'DM Mono', monospace; font-size:12px; letter-spacing:.06em;
+    cursor:pointer; display:flex; align-items:center; gap:8px;
+    box-shadow:var(--shadow); transition:transform .15s ease;
+  }
+  .toggle-btn:hover{ transform:translateY(-1px); }
+  .toggle-btn:active{ transform:translateY(0); }
+
+  /* ---------- Tabs ---------- */
+  nav.tabs{
+    position:sticky; top:0; z-index:20;
+    background:linear-gradient(var(--bg) 82%, transparent);
+    padding:14px 24px 18px;
+  }
+  .tabs-inner{
+    max-width:960px; margin:0 auto; display:flex; gap:8px;
+    border-bottom:1px solid var(--line);
+  }
+  .tab-btn{
+    appearance:none; border:none; background:none; cursor:pointer;
+    font-family:'DM Mono', monospace; font-size:12.5px; letter-spacing:.05em;
+    text-transform:uppercase; color:var(--muted); padding:12px 6px 14px;
+    border-bottom:2px solid transparent; margin-bottom:-1px;
+    transition:color .2s ease, border-color .2s ease;
+  }
+  .tab-btn.active{ color:var(--ink); border-bottom-color:var(--amber); }
+  .tab-btn span.n{ color:var(--rose); margin-right:6px; }
+
+  .panel{ display:none; }
+  .panel.active{ display:block; }
+
+  /* ---------- Reference card (Entry 000) ---------- */
+  .ref-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:14px;
+    padding:28px; margin:28px 0 40px; box-shadow:var(--shadow);
+  }
+  .ref-card h2{
+    font-family:'DM Serif Display', serif; font-weight:400; font-size:22px; margin:0 0 4px;
+  }
+  .ref-note{ color:var(--muted); font-size:13.5px; margin:0 0 22px; line-height:1.6; }
+
+  table.pentad{
+    width:100%; border-collapse:collapse; font-size:13.5px; margin:0 0 26px;
+  }
+  table.pentad caption{
+    text-align:left; font-family:'DM Mono', monospace; font-size:11px;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:10px;
+  }
+  table.pentad th, table.pentad td{
+    border:1px solid var(--line); padding:10px 12px; vertical-align:top; text-align:left; line-height:1.5;
+  }
+  table.pentad thead th{
+    background:var(--surface-2); font-family:'DM Mono', monospace; font-weight:500;
+    font-size:11.5px; letter-spacing:.04em; text-transform:uppercase; color:var(--muted);
+  }
+  table.pentad td.stage{
+    font-family:'DM Mono', monospace; font-weight:500; white-space:nowrap; width:34px; text-align:center;
+  }
+  table.pentad tr:nth-child(1) td.stage, table.pentad tr:nth-child(1) th.stage{ color:var(--amber); }
+  tr[data-s="I"] td.stage{ color:var(--rose); }
+  tr[data-s="II"] td.stage{ color:var(--amber); }
+  tr[data-s="III"] td.stage{ color:var(--violet); }
+  tr[data-s="IV"] td.stage{ color:var(--teal); }
+  tr[data-s="V"] td.stage{ color:var(--ink); font-weight:700; }
+
+  figure.pentagon{ margin:0 0 6px; text-align:center; }
+  figure.pentagon svg{ width:100%; max-width:420px; height:auto; }
+  figcaption{ font-size:12.5px; color:var(--muted); margin-top:10px; font-style:italic; }
+
+  /* ---------- Ledger entries ---------- */
+  .entry{
+    position:relative; padding:0 0 0 26px; margin:0 0 6px;
+    border-left:1px solid var(--line);
+  }
+  .entry:last-child{ border-left-color:transparent; }
+  .entry::before{
+    content:""; position:absolute; left:-5px; top:6px; width:9px; height:9px;
+    border-radius:50%; background:var(--dot, var(--muted));
+  }
+  .entry-body{ padding:0 0 34px; }
+
+  .entry-id{
+    font-family:'DM Mono', monospace; font-size:11px; color:var(--muted);
+    letter-spacing:.06em; margin-bottom:6px;
+  }
+  .speaker-row{ display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+  .badge{
+    font-family:'DM Mono', monospace; font-size:11px; letter-spacing:.05em;
+    text-transform:uppercase; padding:3px 9px; border-radius:999px;
+    border:1px solid currentColor;
+  }
+  .badge.ukubona{ color:var(--ink); background:var(--surface-2); border-color:var(--line); }
+  .badge.xai{ color:var(--rose); }
+  .badge.google{ color:var(--teal); }
+  .badge.openai{ color:var(--amber); }
+  .badge.anthropic{ color:var(--violet); }
+  .speaker-title{ font-weight:700; font-size:14.5px; }
+
+  blockquote.prompt{
+    margin:0 0 16px; padding:12px 16px; border-left:3px solid var(--line);
+    background:var(--surface-2); border-radius:0 8px 8px 0; font-style:italic;
+    font-size:14px; color:var(--ink); line-height:1.6;
+  }
+  .response{
+    background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    padding:20px 22px; box-shadow:var(--shadow); font-size:14.5px; line-height:1.7;
+  }
+  .response h4{
+    font-family:'DM Serif Display', serif; font-style:italic; font-weight:400;
+    font-size:16.5px; margin:0 0 12px; color:var(--ink);
+  }
+  .response p{ margin:0 0 12px; }
+  .response p:last-child{ margin-bottom:0; }
+  .response strong{ color:var(--ink); }
+  .response .stage-tag{
+    font-family:'DM Mono', monospace; font-size:11.5px; color:var(--muted);
+  }
+  .response ul{ margin:8px 0 12px; padding-left:20px; }
+  .response li{ margin-bottom:6px; }
+  .pointer{
+    font-family:'DM Mono', monospace; font-size:12px; color:var(--muted);
+    margin:2px 0 14px; display:block;
+  }
+
+  [data-src="xai"] .response{ border-left:3px solid var(--rose); }
+  [data-src="google"] .response{ border-left:3px solid var(--teal); }
+  [data-src="openai"] .response{ border-left:3px solid var(--amber); }
+  [data-src="anthropic"] .response{ border-left:3px solid var(--violet); }
+  [data-src="ukubona"] .response{ border-left:3px solid var(--ink); }
+
+  .entry[data-src="xai"]{ --dot: var(--rose); }
+  .entry[data-src="google"]{ --dot: var(--teal); }
+  .entry[data-src="openai"]{ --dot: var(--amber); }
+  .entry[data-src="anthropic"]{ --dot: var(--violet); }
+  .entry[data-src="ukubona"]{ --dot: var(--ink); }
+
+  /* ---------- Compressed cache tab ---------- */
+  .cache-grid{ display:grid; grid-template-columns:1fr; gap:14px; margin:26px 0; }
+  .cache-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    padding:18px 20px; box-shadow:var(--shadow);
+  }
+  .cache-card .top{ display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .cache-card .token{
+    font-family:'DM Mono', monospace; font-size:13px; font-weight:500;
+    background:var(--surface-2); padding:6px 10px; border-radius:8px; line-height:1.5;
+  }
+  .compress-meta{
+    font-family:'DM Mono', monospace; font-size:12px; color:var(--muted);
+    margin:0 0 22px; padding:12px 16px; border:1px dashed var(--line); border-radius:10px;
+  }
+
+  table.mini{ width:100%; border-collapse:collapse; font-size:13px; margin:0 0 30px; }
+  table.mini th, table.mini td{ border:1px solid var(--line); padding:8px 10px; text-align:left; }
+  table.mini thead th{
+    background:var(--surface-2); font-family:'DM Mono', monospace; font-size:11px;
+    text-transform:uppercase; letter-spacing:.05em; color:var(--muted);
+  }
+  table.mini td.stage{ font-family:'DM Mono', monospace; text-align:center; width:30px; }
+
+  h3.section-h{
+    font-family:'DM Serif Display', serif; font-weight:400; font-style:italic;
+    font-size:19px; margin:34px 0 6px;
+  }
+
+  footer{
+    max-width:960px; margin:60px auto 0; padding:0 24px; color:var(--muted);
+    font-family:'DM Mono', monospace; font-size:11.5px; text-align:center; line-height:1.8;
+  }
+
+  @media (max-width:640px){
+    header{ flex-wrap:wrap; }
+    .toggle-btn{ order:3; }
+    table.pentad{ font-size:12px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-spin" aria-hidden="true">
+    <svg viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="47" fill="none" stroke="var(--violet)" stroke-width="1.4" opacity=".5"/>
+      <path d="M50 8 L66.8 62.4 L15.4 27.6 L84.6 27.6 L33.2 62.4 Z" fill="none" stroke="var(--amber)" stroke-width="2.4" stroke-linejoin="round"/>
+      <circle cx="50" cy="8" r="2.6" fill="var(--rose)"/>
+      <circle cx="66.8" cy="62.4" r="2.6" fill="var(--teal)"/>
+      <circle cx="15.4" cy="27.6" r="2.6" fill="var(--violet)"/>
+      <circle cx="84.6" cy="27.6" r="2.6" fill="var(--violet)"/>
+      <circle cx="33.2" cy="62.4" r="2.6" fill="var(--teal)"/>
+    </svg>
+  </div>
+  <div class="h-text">
+    <p class="eyebrow">Ukubona LLC · Roundtable Ledger · Vol. VII</p>
+    <h1>Nietzsche's Bibliography, Read as a Pentad</h1>
+    <p class="dek">An append-only record of a four-voice roundtable — xAI, Google, OpenAI, Anthropic — moderated in Ukubona's sovereign voice. Okubala si kulaba: counting is not seeing.</p>
+  </div>
+  <button class="toggle-btn" id="themeToggle" aria-label="Toggle light and dark mode">
+    <span id="toggleIcon">☾</span><span id="toggleLabel">Dark</span>
+  </button>
+</header>
+
+<nav class="tabs">
+  <div class="tabs-inner">
+    <button class="tab-btn active" data-tab="stream"><span class="n">I</span>Event-Stream <span style="opacity:.6">(append-only)</span></button>
+    <button class="tab-btn" data-tab="cache"><span class="n">II</span>Compressed Cache <span style="opacity:.6">(lossy)</span></button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- ======================= TAB 1: EVENT STREAM ======================= -->
+  <section class="panel active" id="panel-stream">
+
+    <div class="ref-card">
+      <h2>Reference Cache — the pentad each voice inherited</h2>
+      <p class="ref-note">Filed once, at the head of the ledger, so no later entry needs to re-paste it. Four independent variants of the same five-stage architecture: I (raw signal) through V (committed action), with III as the costly, non-commoditizable router that decides whether IV gets paid for at all.</p>
+
+      <table class="pentad">
+        <caption>Table 1 — Pentadic variants across voices</caption>
+        <thead>
+          <tr>
+            <th class="stage">Stage</th>
+            <th>xAI · Nietzsche's corpus</th>
+            <th>Google · systems mechanics</th>
+            <th>OpenAI · AI layer stack</th>
+            <th>Anthropic · constitutional layer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-s="I">
+            <td class="stage">I</td>
+            <td><em>Birth of Tragedy</em>, <em>Untimely Meditations</em> — raw Dionysian/Apollonian signal, pre-moral</td>
+            <td>The un-audited Event-Stream; what philology returns to before trusting any cache</td>
+            <td>World AI — what is actually happening</td>
+            <td>The live human-feedback stream a constitution is written against, and must keep answering to</td>
+          </tr>
+          <tr data-s="II">
+            <td class="stage">II</td>
+            <td><em>Human, All-Too-Human</em>, <em>Dawn</em>, <em>Gay Science</em> — portable, lossy heuristics</td>
+            <td>The heuristic cache / "good and evil" as corrupted, inverted tokens</td>
+            <td>Perception AI — what pattern does this resemble</td>
+            <td>A reward model — an opaque, gradient-shaped compression of preference, un-inspectable</td>
+          </tr>
+          <tr data-s="III">
+            <td class="stage">III</td>
+            <td><em>Thus Spoke Zarathustra</em> — the costly router forcing II through new topology</td>
+            <td>The routing bottleneck; the figure who won't let II fire straight into V</td>
+            <td>Agentic AI — escalate, or trust the cache and move on</td>
+            <td>The refusal/escalation priors a lab is tempted to bake into the model itself</td>
+          </tr>
+          <tr data-s="IV">
+            <td class="stage">IV</td>
+            <td><em>Beyond Good and Evil</em> — exploratory search across the value-manifold</td>
+            <td>SGD across the moral loss landscape; the expensive gradient pass</td>
+            <td>Generative AI — plausible futures, given escalation was already justified</td>
+            <td>Where a well-behaved frontier model actually lives: a fast, faithful generator, nothing more</td>
+          </tr>
+          <tr data-s="V">
+            <td class="stage">V</td>
+            <td><em>Genealogy</em>, <em>Twilight</em>, <em>Ecce Homo</em> — action, now informed, or the priest's metaphysical deed</td>
+            <td>Warrior's deed vs. priest's self-validating simulation, disconnected from the ecosystem</td>
+            <td>Embodied AI — what actually changes in the world</td>
+            <td>A revision committed to the constitution's own version history — never a silent overwrite</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <figure class="pentagon">
+        <svg viewBox="0 0 420 420" role="img" aria-labelledby="pentaCap">
+          <defs>
+            <radialGradient id="glow" cx="50%" cy="50%" r="60%">
+              <stop offset="0%" stop-color="var(--amber)" stop-opacity="0.16"/>
+              <stop offset="100%" stop-color="var(--amber)" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <circle cx="210" cy="210" r="190" fill="url(#glow)"/>
+          <circle cx="210" cy="210" r="150" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+          <!-- pentagram stroke order I->III->V->II->IV->I -->
+          <polygon points="210,45 336,308 68,145 352,145 84,308"
+                   fill="none" stroke="var(--violet)" stroke-width="2" opacity=".55"/>
+          <!-- nodes -->
+          <g font-family="DM Mono, monospace" font-size="13" text-anchor="middle">
+            <circle cx="210" cy="45" r="9" fill="var(--rose)"/>
+            <text x="210" y="26" fill="var(--ink)">I · STREAM</text>
+
+            <circle cx="352" cy="145" r="9" fill="var(--amber)"/>
+            <text x="368" y="140" fill="var(--ink)" text-anchor="start">II · CACHE</text>
+
+            <circle cx="336" cy="308" r="9" fill="var(--violet)"/>
+            <text x="352" y="330" fill="var(--ink)" text-anchor="start">III · ROUTE</text>
+
+            <circle cx="84" cy="308" r="9" fill="var(--teal)"/>
+            <text x="68" y="330" fill="var(--ink)" text-anchor="end">IV · SEARCH</text>
+
+            <circle cx="68" cy="145" r="9" fill="var(--ink)"/>
+            <text x="52" y="140" fill="var(--ink)" text-anchor="end">V · ACT</text>
+          </g>
+          <text x="210" y="215" text-anchor="middle" font-family="DM Serif Display, serif" font-style="italic" font-size="15" fill="var(--muted)">frozen token</text>
+          <text x="210" y="234" text-anchor="middle" font-family="DM Mono, monospace" font-size="10.5" fill="var(--muted)">⇄ live stream</text>
+        </svg>
+        <figcaption>Fig. 1 — The pentagram traces the exact failure Nietzsche diagnoses: a straight chord from II to V, skipping III and IV, is the shortest path on the diagram and the cheapest one to take. Every entry below is an argument against taking it.</figcaption>
+      </figure>
+    </div>
+
+    <!-- Entry 001 -->
+    <div class="entry" data-src="xai">
+      <div class="entry-body">
+        <div class="entry-id">LEDGER-001 · SESSION A</div>
+        <div class="speaker-row"><span class="badge ukubona">Ukubona</span><span class="stage-tag">opening frame</span></div>
+        <blockquote class="prompt">Nietzsche's Genealogy exposes how "good and evil" are merely frozen II → V shortcuts created to avoid paying the computational cost of continuous verification. I. Birth of Tragedy / Untimely Meditations ⇒ Event-Stream. II. Human, All-Too-Human / Dawn / Gay Science ⇒ System 1. III. Zarathustra ⇒ Routing. IV. Beyond Good &amp; Evil ⇒ System 2. V. Genealogy, Twilight, Ecce Homo ⇒ Action.</blockquote>
+        <div class="speaker-row"><span class="badge xai">xAI</span><span class="speaker-title">Grok</span></div>
+        <div class="response">
+          <h4>The mapping holds — Nietzsche's trajectory is a refusal of the shortcut</h4>
+          <p>Skipping III and IV produces the short-circuit I → II → V. Read this way, Nietzsche's own bibliography is a progressive refusal of that short-circuit, ending in an explicit diagnosis of it: the early works sit close to the raw event-stream; the middle works build, then begin to distrust, the System-1 cache; <em>Zarathustra</em> is the costly routing step most readers still try to skip; <em>Beyond Good and Evil</em> is the deliberate exploratory pass; and the final trio are the only texts that can safely authorize action, because they've already forced the update.</p>
+          <p>The Genealogy is placed at V rather than at II precisely because it is a diagnosis that can be acted on without becoming another frozen triad — the same failure mode visible in any institution that lets the street cry unheard while its cache fires straight to policy.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Entry 002 -->
+    <div class="entry" data-src="xai">
+      <div class="entry-body">
+        <div class="entry-id">LEDGER-002 · SESSION A</div>
+        <div class="speaker-row"><span class="badge ukubona">Ukubona</span><span class="stage-tag">refinement</span></div>
+        <blockquote class="prompt">Zarathustra is the figure who forces the signal through a new topology instead of letting the old moral, all-too-human, cache fire. This is II incarnate. Nietzsche as a Philologist truly captures tokens in name! Because IV is intelligence, which must be beyond all-too-human "good &amp; evil" cache. And let's not forget that action is the way for warrior tribes and "metaphysical deeds" the way for the school of resentment and its high-priests.</blockquote>
+        <div class="speaker-row"><span class="badge xai">xAI</span><span class="speaker-title">Grok</span></div>
+        <div class="response">
+          <p>Zarathustra doesn't become a new cache; he forces the old all-too-human moral cache through a new topology so it can't fire unchecked into action — pure III, the router that refuses to let the inherited heuristic speak with the authority of nature or God.</p>
+          <p>Nietzsche-the-philologist treats "good," "evil," "truth," "guilt," "sin" as compressed, lossy, historically contingent tokens rather than eternal essences — exactly the discipline a good token-keeper needs. That's why IV has to be <em>Beyond Good and Evil</em>: intelligence as the deliberate refusal to treat the all-too-human cache as final.</p>
+          <p>Warrior tribes still act in the world — V as deed, tested against the landscape, feeding back into I. The school of resentment specializes in <strong>metaphysical deeds</strong>: V executed entirely inside the frozen cache of II, never tested against the live stream. The Genealogy is the system log exposing that exact priestly short-circuit.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Entry 003 -->
+    <div class="entry" data-src="google">
+      <div class="entry-body">
+        <div class="entry-id">LEDGER-003 · SESSION B</div>
+        <div class="speaker-row"><span class="badge ukubona">Ukubona</span><span class="stage-tag">carried forward</span></div>
+        <span class="pointer">↳ same opening frame as LEDGER-001 — not re-filed here, see above.</span>
+        <div class="speaker-row"><span class="badge google">Google</span><span class="speaker-title">Gemini</span></div>
+        <div class="response">
+          <h4>The philologist as ledger auditor</h4>
+          <p>Philology is, fundamentally, auditing the Event-Stream. Nietzsche traced "good" back to "noble" and "bad" back to "plebeian," proving the received moral cache was a lossy, corrupted heuristic — the system builder forcing the architecture to re-read the raw ledger because the cached tokens were registering massive error against actual human behavior.</p>
+          <p>If <em>Zarathustra</em> is the routing layer, <em>Beyond Good and Evil</em> is the gradient descent across the moral loss landscape — intelligence as the willingness to pay the high computational cost of navigating it, rather than defaulting to the frozen shortcut.</p>
+          <p>The warrior's deed is deployed back into the physical ecosystem and tested against reality, closing the loop into the next event-stream. The priest's metaphysical deed constructs a fabricated second world and executes action entirely inside a closed, self-validating simulation — a headless architecture insulated from the actual loss landscape. Genealogy is the system log exposing that catastrophic short-circuit.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Entry 004 -->
+    <div class="entry" data-src="google">
+      <div class="entry-body">
+        <div class="entry-id">LEDGER-004 · SESSION B</div>
+        <div class="speaker-row"><span class="badge ukubona">Ukubona</span><span class="stage-tag">the biological constraint</span></div>
+        <blockquote class="prompt">Let's be gentle on the human 20W brain: it's a biological constraint, and even Nietzsche himself might have fried his brain by 1886 because he was operating at the boundaries of biological limits — that Dionysian monster.</blockquote>
+        <div class="speaker-row"><span class="badge google">Google</span><span class="speaker-title">Gemini</span></div>
+        <div class="response">
+          <p>The 20-watt limit is a hard physical law, and it reframes the II → V shortcut entirely: not a moral failure, but an evolutionary necessity. A 20W system running continuous System-2 search on every input would run out of glucose and collapse — the brain <em>has</em> to freeze tokens into a cache just to keep the organism moving.</p>
+          <p>Nietzsche's trajectory is what happens when a person refuses that constraint: an infinite-compute algorithm demanded of finite, fragile hardware, running at full utilization for a decade. By his collapse, the monster hadn't just deconstructed the cache philosophically — he'd melted his own circuits carrying the computational load of the species.</p>
+          <p>Hence the case for external architecture: not forcing the 20W brain to run the gradient descent itself, but building infrastructure that absorbs the Event-Stream and the search, so the signal reaching the human is already clean by the time it reaches the UI/UX layer.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Entry 005 -->
+    <div class="entry" data-src="google">
+      <div class="entry-body">
+        <div class="entry-id">LEDGER-005 · SESSION B</div>
+        <div class="speaker-row"><span class="badge ukubona">Ukubona</span><span class="stage-tag">the stakes</span></div>
+        <blockquote class="prompt">And thus Ukubona LLC stakes its entire existence upon this constraint: in an age of the attention economy, overwhelming information, adversarial intelligence — the 20W is no longer capable of shit. We need a sovereignty intelligence broker.</blockquote>
+        <div class="speaker-row"><span class="badge google">Google</span><span class="speaker-title">Gemini</span></div>
+        <div class="response">
+          <p>The modern environment weaponizes the II → V shortcut: synthetic outrage, manufactured urgency, frictionless engagement, all forcing output without a verification pass. The 20W processor is simply outgunned by adversarial ML built to exploit exactly that ceiling.</p>
+          <p>A digital twin functions as a protective computational exoskeleton — intercepting the event-stream, running the search the human can't afford, and brokering only verified signal to the UI/UX layer — resilient enough to weather adversarial shocks without breaking at the core, and without taking the operator's executive sovereignty away from them.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Entry 006 -->
+    <div class="entry" data-src="openai">
+      <div class="entry-body">
+        <div class="entry-id">LEDGER-006 · SESSION C</div>
+        <div class="speaker-row"><span class="badge ukubona">Ukubona</span><span class="stage-tag">where does the model itself sit?</span></div>
+        <div class="speaker-row"><span class="badge openai">OpenAI</span><span class="speaker-title">GPT</span></div>
+        <div class="response">
+          <h4>Most frontier models — including me — are Stage IV machines</h4>
+          <p>Optimized to generate, compare, synthesize, and evaluate possibilities given a context. Powerful, but not the whole architecture. The mistake is equating "better reasoning" with "better governance."</p>
+          <ul>
+            <li><span class="stage-tag">I</span> — what is actually happening (continuous stream)</li>
+            <li><span class="stage-tag">II</span> — what usually works (cached heuristics)</li>
+            <li><span class="stage-tag">III</span> — is this anomalous enough to justify paying for IV</li>
+            <li><span class="stage-tag">IV</span> — deliberate, search, reason</li>
+            <li><span class="stage-tag">V</span> — commit resources and act</li>
+          </ul>
+          <p>Today's LLMs mostly inhabit IV; they don't own III, because they don't continuously observe the world, maintain calibrated uncertainty over time, or bear the consequences of a missed escalation. Reasoning is becoming cheaper; routing is becoming more valuable. The output isn't merely a token — it's a <strong>conditional compressor</strong>, dependent on prompt, context, training, objective. A smoke detector isn't valuable for analyzing smoke beautifully; it's valuable because it stays silent almost always, and never stays silent when the house is on fire. III is the smoke detector. IV is the fire department.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Entry 007 -->
+    <div class="entry" data-src="openai">
+      <div class="entry-body">
+        <div class="entry-id">LEDGER-007 · SESSION C</div>
+        <div class="speaker-row"><span class="badge ukubona">Ukubona</span><span class="stage-tag">the pun in the name</span></div>
+        <blockquote class="prompt">Your name, the "G" in GPT, is really on the money in the Ukubona pentadic variant: World AI → Perception AI → Agentic AI (the routing for I, II) → Generative AI → Embodied AI.</blockquote>
+        <div class="speaker-row"><span class="badge openai">OpenAI</span><span class="speaker-title">GPT</span></div>
+        <div class="response">
+          <p>An elegant inversion — Generative AI demoted from "culmination" to one stage in a larger control loop. GPT = Generative Pre-trained Transformer places the model squarely in IV: awakened only after III has already decided the situation deserves expensive inference.</p>
+          <p>Many "agentic" systems today collapse to <em>Event → LLM → Tool → Done</em>, skipping the two layers that matter most — Perception and Routing — so every event gets treated as worthy of deliberation, and the generator becomes a hammer looking for nails. Performance is usually limited not by the strongest component but by the weakest interface between components — which is exactly why the handoff into III matters more than making IV another 10% smarter.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Entry 008 -->
+    <div class="entry" data-src="openai">
+      <div class="entry-body">
+        <div class="entry-id">LEDGER-008 · SESSION C</div>
+        <div class="speaker-row"><span class="badge ukubona">Ukubona</span><span class="stage-tag">the business claim</span></div>
+        <blockquote class="prompt">But notice that III can't be commoditized. Every person, family, enterprise, regulator, and civilizational planner needs this personalized.</blockquote>
+        <div class="speaker-row"><span class="badge openai">OpenAI</span><span class="speaker-title">GPT</span></div>
+        <div class="response">
+          <p>Sharper as: III is <em>difficult</em> to commoditize because it depends on local objectives, constraints, and risk tolerance — while I, II, IV, and V are already becoming commodities (sensors and APIs; foundation-model perception; multiple frontier generators; robotics and workflow platforms). The same event — a patient's creatinine rising 20% — gets radically different routing policies from the patient, the nephrologist, the hospital, the regulator, and the national planner, even when the generated explanation is identical. Controllers aren't universal; they're tuned. A Formula One controller is terrible for an oil tanker.</p>
+          <p>III's parameters — acceptable false positives, acceptable false negatives, latency, opportunity cost, legal responsibility, organizational values — are properties of the principal, not the model. The moat isn't the world's best LLM; it's the world's best routing policy for a particular decision-maker, and it's recursive: person → family → enterprise → regulator → civilization, each layer inheriting information from below while optimizing its own objective function. Closer to constitutional routing than consumer personalization — each entity has its own constitution, and III decides when reality has diverged from it enough to justify paying for generation.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Entry 009 — Anthropic contribution -->
+    <div class="entry" data-src="anthropic">
+      <div class="entry-body">
+        <div class="entry-id">LEDGER-009 · SESSION D</div>
+        <div class="speaker-row"><span class="badge ukubona">Ukubona</span><span class="stage-tag">appended live, this session</span></div>
+        <span class="pointer">↳ invited to drop a fourth voice into the standing frame — xAI on Nietzsche, Google on the 20W brain, OpenAI on III's moat.</span>
+        <div class="speaker-row"><span class="badge anthropic">Anthropic</span><span class="speaker-title">Claude Sonnet 5</span></div>
+        <div class="response">
+          <h4>The constitution is also a cache</h4>
+          <p>OpenAI is right that III can't be commoditized because it's a property of the principal, not the model. That claim has a sharp edge when turned on Anthropic's own method, which is worth stating plainly rather than skipping past.</p>
+          <p>RLHF, in this pentad, trains a reward model that is itself a II — a heuristic cache compressed out of a huge number of human preference judgments, opaque, gradient-shaped, not something you can read. It works, and it also drifts silently, exactly the way any frozen token drifts: quietly, until someone audits it the way Nietzsche audited "good" and "evil" back to "noble" and "plebeian."</p>
+          <p>Constitutional AI is an attempt to make that cache legible instead of opaque — a written, versioned document the model is trained against, revisable, inspectable, closer in spirit to an append-only ledger than to a black-box reward signal. That's a genuine structural kinship with the correction-ledger pattern this series keeps returning to: a sovereign override that lives as a readable entry, not a silent reweighting.</p>
+          <p>But the reflexive move matters more than the flattering one. A constitution can freeze into a new "good and evil" as easily as any other cache — Nietzsche's critique doesn't exempt the document just because it's legible. And a constitution necessarily bakes some III into the model itself: refusal priors, escalation priors, when-to-defer-to-a-human priors, decided once, by a lab, in advance, for every principal at once. That is precisely the routing layer OpenAI's argument says shouldn't be commoditized — a hospital's risk tolerance is not a startup's, and neither is the model's.</p>
+          <p>So the honest placement: Claude, well-constituted, is a better-behaved IV — a generator whose defaults are visible and arguable rather than buried. It is not, and shouldn't try to be, a substitute for the client's own personalized III. Ukubona's sovereign layer isn't competing with a constitution; it's the place where a constitution's necessarily-generic priors get overridden by a particular principal's actual objective function — the same override this ledger has been filing as a first-class entry all along.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Entry 010 -->
+    <div class="entry" data-src="ukubona">
+      <div class="entry-body">
+        <div class="entry-id">LEDGER-010 · SESSION D</div>
+        <div class="speaker-row"><span class="badge ukubona">Ukubona</span><span class="speaker-title">Sovereign Moderator — closing note</span></div>
+        <div class="response">
+          <p>Four voices, one frame, no chord skipped: xAI supplied the literary audit, Google the thermodynamic constraint, OpenAI the market argument for III, Anthropic the reflexive check on its own cache. Nothing above is amended; nothing is deleted. The next voice appends below this line.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ======================= TAB 2: COMPRESSED CACHE ======================= -->
+  <section class="panel" id="panel-cache">
+
+    <div class="compress-meta">
+      compression: lossy · ratio ≈ 12:1 · method: heuristic tokenization (System-1 style) · warning: read the Event-Stream tab before acting on anything below
+    </div>
+
+    <h3 class="section-h">One line per voice</h3>
+    <div class="cache-grid">
+      <div class="cache-card">
+        <div class="top"><span class="badge xai">xAI</span><strong>Grok</strong></div>
+        <div class="token">Genealogy = the audit trail exposing "good/evil" as a frozen II→V shortcut. Warrior acts; priest performs metaphysical deeds inside a closed cache.</div>
+      </div>
+      <div class="cache-card">
+        <div class="top"><span class="badge google">Google</span><strong>Gemini</strong></div>
+        <div class="token">20W brain can't afford continuous System-2. Nietzsche ran it anyway and burned out. Build an external exoskeleton to absorb I and IV for the human.</div>
+      </div>
+      <div class="cache-card">
+        <div class="top"><span class="badge openai">OpenAI</span><strong>GPT</strong></div>
+        <div class="token">Reasoning (IV) is getting cheap and commoditized. Routing (III) is the scarce, non-commoditizable moat — tuned to the principal, recursive by layer.</div>
+      </div>
+      <div class="cache-card">
+        <div class="top"><span class="badge anthropic">Anthropic</span><strong>Claude</strong></div>
+        <div class="token">A constitution is a legible II, not a substitute for a client's own III. Keep it revisable, or it refreezes into exactly what it was written to expose.</div>
+      </div>
+      <div class="cache-card">
+        <div class="top"><span class="badge ukubona">Ukubona</span><strong>Sovereign synthesis</strong></div>
+        <div class="token">Absorb I and IV on the client's behalf; never own their III; log every override as an append, never an edit.</div>
+      </div>
+    </div>
+
+    <h3 class="section-h">Pentad, tokenized</h3>
+    <table class="mini">
+      <thead><tr><th class="stage">Stage</th><th>Token</th></tr></thead>
+      <tbody>
+        <tr><td class="stage">I</td><td>Raw stream. No opinion yet.</td></tr>
+        <tr><td class="stage">II</td><td>Cheap heuristic. Usually right, sometimes frozen.</td></tr>
+        <tr><td class="stage">III</td><td>The only question that matters: escalate, or trust the cache. Non-commoditizable.</td></tr>
+        <tr><td class="stage">IV</td><td>Expensive search. Increasingly abundant, increasingly cheap.</td></tr>
+        <tr><td class="stage">V</td><td>Committed deed — or, if faked, a metaphysical deed with no feedback loop.</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="section-h">The one sentence this whole ledger compresses to</h3>
+    <div class="cache-card" style="font-family:'DM Serif Display', serif; font-style:italic; font-size:17px; line-height:1.6;">
+      Intelligence is abundant now; what's scarce is knowing when not to use it — and that judgment belongs to the principal, not the model.
+    </div>
+
+  </section>
+
+</div>
+
+<footer>
+  UKUBONA LLC — append-only correction ledger · okubala si kulaba<br>
+  Sources filed under LEDGER-001…008 are excerpted from the user's own multi-model roundtable sessions (xAI · Grok, Google · Gemini, OpenAI · GPT). LEDGER-009 is Anthropic's own contribution, filed this session.
+</footer>
+
+<script>
+  const root = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  const icon = document.getElementById('toggleIcon');
+  const label = document.getElementById('toggleLabel');
+  function setTheme(dark){
+    root.classList.toggle('dark', dark);
+    icon.textContent = dark ? '☀' : '☾';
+    label.textContent = dark ? 'Light' : 'Dark';
+  }
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  setTheme(prefersDark);
+  btn.addEventListener('click', () => setTheme(!root.classList.contains('dark')));
+
+  document.querySelectorAll('.tab-btn').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      document.getElementById('panel-' + b.dataset.tab).classList.add('active');
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+</script>
+
+</body>
+</html>
